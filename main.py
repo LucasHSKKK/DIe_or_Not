@@ -23,8 +23,10 @@ from sklearn.preprocessing import OneHotEncoder
 
 # onehotencoder with 'cabine' column
 ct = ColumnTransformer(
-    transformers=[("encoder", OneHotEncoder(), [7])], remainder="passthrough"
-)
-x = np.array(ct.fit_transform(x))
+    transformers=[("encoder", OneHotEncoder(sparse_output=False), [6, 7])],
+    remainder="passthrough",
+)  # using the sparse_output false i got the whole and in this case the desired output
+x = ct.fit_transform(x)
 
-# need to figure out how to transform the column 10/6 into onehotencoder without broke the table
+
+print(x)
