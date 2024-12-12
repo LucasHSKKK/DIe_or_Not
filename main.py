@@ -3,7 +3,6 @@ import pandas as pd
 import tensorflow as tf
 
 dataset_train = pd.read_csv("dataset/train.csv")
-dataset_test = pd.read_csv("dataset/test.csv")
 
 # filling out missing data, specific the 'age' (mean, median and mode can be used just with numbers)
 dataset_train["Age"] = dataset_train["Age"].fillna(dataset_train["Age"].median())
