@@ -5,10 +5,10 @@ import tensorflow as tf
 dataset_train = pd.read_csv("dataset/train.csv")
 dataset_test = pd.read_csv("dataset/test.csv")
 
-#filling out missing data, specific the 'age' (mean, median and mode can be used just with numbers)
-dataset_train['Age'] = dataset_train['Age'].fillna(dataset_train['Age'].median())
-#filling out missing data with 'Unknown'
-dataset_train['Cabin'].fillna('Unknown', inplace=True)
+# filling out missing data, specific the 'age' (mean, median and mode can be used just with numbers)
+dataset_train["Age"] = dataset_train["Age"].fillna(dataset_train["Age"].median())
+# filling out missing data with 'Unknown'
+dataset_train["Cabin"].fillna("Unknown", inplace=True)
 
 # this code takes since the second column till end except for 8 and 3
 x = dataset_train.iloc[:, [2, 4, 5, 6, 7, 9, 10, 11]].values
@@ -59,3 +59,14 @@ ann.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
 
 # training the ANN
 ann.fit(x_train, y_train, batch_size=32, epochs=100)
+
+y_pred = ann.predict(x_test)
+y_pred = y_pred > 0.5
+# print(np.concatenate((y_pred.reshape(len(y_pred),1),y_test.reshape(len(y_test),1)),1))
+
+# adding the test set and the result (confusion matrix)
+from sklearn.metrics import confusion_matrix, accuracy_score
+
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+print(accuracy_score(y_test, y_pred))
